@@ -1,0 +1,1724 @@
+---
+openapi: 3.0.3
+info:
+  title: store API
+  description: store API documentation
+  contact: {}
+  license:
+    name: unlicensed
+  version: 0.0.1
+servers:
+- url: http://localhost:8080
+  description: Inferred Url
+tags:
+- name: account-resource
+  description: Account Resource
+- name: customer-details-resource
+  description: Customer Details Resource
+- name: product-category-resource
+  description: Product Category Resource
+- name: product-order-resource
+  description: Product Order Resource
+- name: product-resource
+  description: Product Resource
+- name: public-user-resource
+  description: Public User Resource
+- name: shopping-cart-resource
+  description: Shopping Cart Resource
+- name: user-jwt-controller
+  description: User JWT Controller
+- name: user-resource
+  description: User Resource
+paths:
+  "/api/account":
+    get:
+      tags:
+      - account-resource
+      summary: getAccount
+      operationId: getAccountUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/AdminUserDTO"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - account-resource
+      summary: saveAccount
+      operationId: saveAccountUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AdminUserDTO"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/account/change-password":
+    post:
+      tags:
+      - account-resource
+      summary: changePassword
+      operationId: changePasswordUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PasswordChangeDTO"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/account/reset-password/finish":
+    post:
+      tags:
+      - account-resource
+      summary: finishPasswordReset
+      operationId: finishPasswordResetUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/KeyAndPasswordVM"
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/account/reset-password/init":
+    post:
+      tags:
+      - account-resource
+      summary: requestPasswordReset
+      operationId: requestPasswordResetUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/activate":
+    get:
+      tags:
+      - account-resource
+      summary: activateAccount
+      operationId: activateAccountUsingGET
+      parameters:
+      - name: key
+        in: query
+        description: key
+        required: true
+        style: form
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/authenticate":
+    get:
+      tags:
+      - account-resource
+      summary: isAuthenticated
+      operationId: isAuthenticatedUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - user-jwt-controller
+      summary: authorize
+      operationId: authorizeUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/LoginVM"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/JWTToken"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/register":
+    post:
+      tags:
+      - account-resource
+      summary: registerAccount
+      operationId: registerAccountUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ManagedUserVM"
+      responses:
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/customer-details":
+    get:
+      tags:
+      - customer-details-resource
+      summary: getAllCustomerDetails
+      operationId: getAllCustomerDetailsUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: Page number of the requested page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        description: Size of a page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: sort
+        in: query
+        description: 'Sorting criteria in the format: property(,asc|desc). Default
+          sort order is ascending. Multiple sort criteria are supported.'
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/CustomerDetails"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - customer-details-resource
+      summary: createCustomerDetails
+      operationId: createCustomerDetailsUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CustomerDetails"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/CustomerDetails"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/customer-details/{id}":
+    get:
+      tags:
+      - customer-details-resource
+      summary: getCustomerDetails
+      operationId: getCustomerDetailsUsingGET
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/CustomerDetails"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+      - customer-details-resource
+      summary: updateCustomerDetails
+      operationId: updateCustomerDetailsUsingPUT
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CustomerDetails"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/CustomerDetails"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - customer-details-resource
+      summary: deleteCustomerDetails
+      operationId: deleteCustomerDetailsUsingDELETE
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+      - customer-details-resource
+      summary: partialUpdateCustomerDetails
+      operationId: partialUpdateCustomerDetailsUsingPATCH
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CustomerDetails"
+          application/merge-patch+json:
+            schema:
+              "$ref": "#/components/schemas/CustomerDetails"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/CustomerDetails"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/api/product-categories":
+    get:
+      tags:
+      - product-category-resource
+      summary: getAllProductCategories
+      operationId: getAllProductCategoriesUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: Page number of the requested page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        description: Size of a page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: sort
+        in: query
+        description: 'Sorting criteria in the format: property(,asc|desc). Default
+          sort order is ascending. Multiple sort criteria are supported.'
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ProductCategory"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - product-category-resource
+      summary: createProductCategory
+      operationId: createProductCategoryUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductCategory"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ProductCategory"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/product-categories/{id}":
+    get:
+      tags:
+      - product-category-resource
+      summary: getProductCategory
+      operationId: getProductCategoryUsingGET
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ProductCategory"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+      - product-category-resource
+      summary: updateProductCategory
+      operationId: updateProductCategoryUsingPUT
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductCategory"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ProductCategory"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - product-category-resource
+      summary: deleteProductCategory
+      operationId: deleteProductCategoryUsingDELETE
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+      - product-category-resource
+      summary: partialUpdateProductCategory
+      operationId: partialUpdateProductCategoryUsingPATCH
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductCategory"
+          application/merge-patch+json:
+            schema:
+              "$ref": "#/components/schemas/ProductCategory"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ProductCategory"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/api/product-orders":
+    get:
+      tags:
+      - product-order-resource
+      summary: getAllProductOrders
+      operationId: getAllProductOrdersUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ProductOrder"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - product-order-resource
+      summary: createProductOrder
+      operationId: createProductOrderUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductOrder"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ProductOrder"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/product-orders/{id}":
+    get:
+      tags:
+      - product-order-resource
+      summary: getProductOrder
+      operationId: getProductOrderUsingGET
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ProductOrder"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+      - product-order-resource
+      summary: updateProductOrder
+      operationId: updateProductOrderUsingPUT
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductOrder"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ProductOrder"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - product-order-resource
+      summary: deleteProductOrder
+      operationId: deleteProductOrderUsingDELETE
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+      - product-order-resource
+      summary: partialUpdateProductOrder
+      operationId: partialUpdateProductOrderUsingPATCH
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ProductOrder"
+          application/merge-patch+json:
+            schema:
+              "$ref": "#/components/schemas/ProductOrder"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ProductOrder"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/api/products":
+    get:
+      tags:
+      - product-resource
+      summary: getAllProducts
+      operationId: getAllProductsUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: Page number of the requested page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        description: Size of a page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: sort
+        in: query
+        description: 'Sorting criteria in the format: property(,asc|desc). Default
+          sort order is ascending. Multiple sort criteria are supported.'
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Product"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - product-resource
+      summary: createProduct
+      operationId: createProductUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Product"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Product"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/products/{id}":
+    get:
+      tags:
+      - product-resource
+      summary: getProduct
+      operationId: getProductUsingGET
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Product"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+      - product-resource
+      summary: updateProduct
+      operationId: updateProductUsingPUT
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Product"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Product"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - product-resource
+      summary: deleteProduct
+      operationId: deleteProductUsingDELETE
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+      - product-resource
+      summary: partialUpdateProduct
+      operationId: partialUpdateProductUsingPATCH
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Product"
+          application/merge-patch+json:
+            schema:
+              "$ref": "#/components/schemas/Product"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Product"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/api/authorities":
+    get:
+      tags:
+      - public-user-resource
+      summary: getAuthorities
+      operationId: getAuthoritiesUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/users":
+    get:
+      tags:
+      - public-user-resource
+      summary: getAllPublicUsers
+      operationId: getAllPublicUsersUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: Page number of the requested page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        description: Size of a page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: sort
+        in: query
+        description: 'Sorting criteria in the format: property(,asc|desc). Default
+          sort order is ascending. Multiple sort criteria are supported.'
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/UserDTO"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/shopping-carts":
+    get:
+      tags:
+      - shopping-cart-resource
+      summary: getAllShoppingCarts
+      operationId: getAllShoppingCartsUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ShoppingCart"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - shopping-cart-resource
+      summary: createShoppingCart
+      operationId: createShoppingCartUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ShoppingCart"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ShoppingCart"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/shopping-carts/{id}":
+    get:
+      tags:
+      - shopping-cart-resource
+      summary: getShoppingCart
+      operationId: getShoppingCartUsingGET
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ShoppingCart"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+      - shopping-cart-resource
+      summary: updateShoppingCart
+      operationId: updateShoppingCartUsingPUT
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ShoppingCart"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ShoppingCart"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - shopping-cart-resource
+      summary: deleteShoppingCart
+      operationId: deleteShoppingCartUsingDELETE
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+      - shopping-cart-resource
+      summary: partialUpdateShoppingCart
+      operationId: partialUpdateShoppingCartUsingPATCH
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ShoppingCart"
+          application/merge-patch+json:
+            schema:
+              "$ref": "#/components/schemas/ShoppingCart"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ShoppingCart"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/api/admin/users":
+    get:
+      tags:
+      - user-resource
+      summary: getAllUsers
+      operationId: getAllUsersUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: Page number of the requested page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        description: Size of a page
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: integer
+          format: int32
+      - name: sort
+        in: query
+        description: 'Sorting criteria in the format: property(,asc|desc). Default
+          sort order is ascending. Multiple sort criteria are supported.'
+        required: false
+        style: form
+        allowReserved: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/AdminUserDTO"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+      - user-resource
+      summary: updateUser
+      operationId: updateUserUsingPUT
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AdminUserDTO"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/AdminUserDTO"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - user-resource
+      summary: createUser
+      operationId: createUserUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AdminUserDTO"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/User"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/api/admin/users/{login}":
+    get:
+      tags:
+      - user-resource
+      summary: getUser
+      operationId: getUserUsingGET
+      parameters:
+      - name: login
+        in: path
+        description: login
+        required: true
+        style: simple
+        schema:
+          pattern: "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$"
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/AdminUserDTO"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - user-resource
+      summary: deleteUser
+      operationId: deleteUserUsingDELETE
+      parameters:
+      - name: login
+        in: path
+        description: login
+        required: true
+        style: simple
+        schema:
+          pattern: "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$"
+          type: string
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+components:
+  schemas:
+    AdminUserDTO:
+      title: AdminUserDTO
+      required:
+      - login
+      type: object
+      properties:
+        activated:
+          type: boolean
+        authorities:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        createdBy:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        email:
+          maxLength: 254
+          minLength: 5
+          type: string
+        firstName:
+          maxLength: 50
+          minLength: 0
+          type: string
+        id:
+          type: integer
+          format: int64
+        imageUrl:
+          maxLength: 256
+          minLength: 0
+          type: string
+        langKey:
+          maxLength: 10
+          minLength: 2
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        lastName:
+          maxLength: 50
+          minLength: 0
+          type: string
+        login:
+          maxLength: 50
+          minLength: 1
+          pattern: "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$"
+          type: string
+    CustomerDetails:
+      title: CustomerDetails
+      required:
+      - addressLine1
+      - city
+      - country
+      - gender
+      - phone
+      - user
+      type: object
+      properties:
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        carts:
+          uniqueItems: true
+          type: array
+          items:
+            "$ref": "#/components/schemas/ShoppingCart"
+        city:
+          type: string
+        country:
+          type: string
+        gender:
+          type: string
+          enum:
+          - FEMALE
+          - MALE
+          - OTHER
+        id:
+          type: integer
+          format: int64
+        phone:
+          type: string
+        user:
+          "$ref": "#/components/schemas/User"
+    JWTToken:
+      title: JWTToken
+      type: object
+      properties:
+        id_token:
+          type: string
+    KeyAndPasswordVM:
+      title: KeyAndPasswordVM
+      type: object
+      properties:
+        key:
+          type: string
+        newPassword:
+          type: string
+    LoginVM:
+      title: LoginVM
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        password:
+          maxLength: 100
+          minLength: 4
+          type: string
+        rememberMe:
+          type: boolean
+        username:
+          maxLength: 50
+          minLength: 1
+          type: string
+    ManagedUserVM:
+      title: ManagedUserVM
+      required:
+      - login
+      type: object
+      properties:
+        activated:
+          type: boolean
+        authorities:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        createdBy:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        email:
+          maxLength: 254
+          minLength: 5
+          type: string
+        firstName:
+          maxLength: 50
+          minLength: 0
+          type: string
+        id:
+          type: integer
+          format: int64
+        imageUrl:
+          maxLength: 256
+          minLength: 0
+          type: string
+        langKey:
+          maxLength: 10
+          minLength: 2
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        lastName:
+          maxLength: 50
+          minLength: 0
+          type: string
+        login:
+          maxLength: 50
+          minLength: 1
+          pattern: "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$"
+          type: string
+        password:
+          maxLength: 100
+          minLength: 4
+          type: string
+    PasswordChangeDTO:
+      title: PasswordChangeDTO
+      type: object
+      properties:
+        currentPassword:
+          type: string
+        newPassword:
+          type: string
+    Product:
+      title: Product
+      required:
+      - name
+      - price
+      - productCategory
+      - productSize
+      type: object
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int64
+        image:
+          type: string
+          format: byte
+        imageContentType:
+          type: string
+        name:
+          type: string
+        price:
+          minimum: 0
+          exclusiveMinimum: false
+          type: number
+          format: bigdecimal
+        productCategory:
+          "$ref": "#/components/schemas/ProductCategory"
+        productSize:
+          type: string
+          enum:
+          - L
+          - M
+          - S
+          - XL
+          - XXL
+      description: Product sold by the Online store
+    ProductCategory:
+      title: ProductCategory
+      required:
+      - name
+      type: object
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        products:
+          uniqueItems: true
+          type: array
+          items:
+            "$ref": "#/components/schemas/Product"
+    ProductOrder:
+      title: ProductOrder
+      required:
+      - cart
+      - product
+      - quantity
+      - totalPrice
+      type: object
+      properties:
+        cart:
+          "$ref": "#/components/schemas/ShoppingCart"
+        id:
+          type: integer
+          format: int64
+        product:
+          "$ref": "#/components/schemas/Product"
+        quantity:
+          type: integer
+          format: int32
+        totalPrice:
+          minimum: 0
+          exclusiveMinimum: false
+          type: number
+          format: bigdecimal
+    ShoppingCart:
+      title: ShoppingCart
+      required:
+      - customerDetails
+      - paymentMethod
+      - placedDate
+      - status
+      - totalPrice
+      type: object
+      properties:
+        customerDetails:
+          "$ref": "#/components/schemas/CustomerDetails"
+        id:
+          type: integer
+          format: int64
+        orders:
+          uniqueItems: true
+          type: array
+          items:
+            "$ref": "#/components/schemas/ProductOrder"
+        paymentMethod:
+          type: string
+          enum:
+          - CREDIT_CARD
+          - IDEAL
+        paymentReference:
+          type: string
+        placedDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - CANCELLED
+          - COMPLETED
+          - PAID
+          - PENDING
+          - REFUNDED
+        totalPrice:
+          minimum: 0
+          exclusiveMinimum: false
+          type: number
+          format: bigdecimal
+    User:
+      title: User
+      required:
+      - activated
+      - login
+      type: object
+      properties:
+        activated:
+          type: boolean
+        email:
+          maxLength: 254
+          minLength: 5
+          type: string
+        firstName:
+          maxLength: 50
+          minLength: 0
+          type: string
+        id:
+          type: integer
+          format: int64
+        imageUrl:
+          maxLength: 256
+          minLength: 0
+          type: string
+        langKey:
+          maxLength: 10
+          minLength: 2
+          type: string
+        lastName:
+          maxLength: 50
+          minLength: 0
+          type: string
+        login:
+          maxLength: 50
+          minLength: 1
+          pattern: "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$"
+          type: string
+        resetDate:
+          type: string
+          format: date-time
+    UserDTO:
+      title: UserDTO
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        login:
+          type: string
