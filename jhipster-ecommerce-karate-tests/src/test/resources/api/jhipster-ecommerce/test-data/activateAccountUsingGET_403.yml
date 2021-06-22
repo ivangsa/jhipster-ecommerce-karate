@@ -1,0 +1,8 @@
+statusCode: 403
+headers: {}
+params:
+  key: fill some value
+body: null
+matchResponse: false
+responseMatch: null
+responseMatchesEach: {}

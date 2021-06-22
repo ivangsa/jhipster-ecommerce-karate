@@ -1,0 +1,25 @@
+statusCode: 200
+headers: {}
+params:
+  id: 0
+body: null
+matchResponse: false
+responseMatch:
+  description: '##string'
+  id: '##number'
+  name: '#string'
+  products: '##array'
+responseMatchesEach:
+  products:
+    description: '##string'
+    id: '##number'
+    image: '##string'
+    imageContentType: '##string'
+    name: '#string'
+    price: '#string'
+    productCategory:
+      description: '##string'
+      id: '##number'
+      name: '#string'
+      products: '##array'
+    productSize: '#string'

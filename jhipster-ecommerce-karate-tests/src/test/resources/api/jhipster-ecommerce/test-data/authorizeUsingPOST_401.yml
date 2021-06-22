@@ -1,0 +1,10 @@
+statusCode: 401
+headers: {}
+params: null
+body:
+  password: fill some value
+  rememberMe: true
+  username: fill some value
+matchResponse: false
+responseMatch: null
+responseMatchesEach: {}

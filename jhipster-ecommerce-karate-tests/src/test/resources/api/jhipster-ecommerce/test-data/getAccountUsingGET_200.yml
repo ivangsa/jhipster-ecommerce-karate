@@ -1,0 +1,21 @@
+statusCode: 200
+headers: {}
+params: null
+body: null
+matchResponse: false
+responseMatch:
+  activated: '##boolean'
+  authorities: '##array'
+  createdBy: '##string'
+  createdDate: '##string'
+  email: '##string'
+  firstName: '##string'
+  id: '##number'
+  imageUrl: '##string'
+  langKey: '##string'
+  lastModifiedBy: '##string'
+  lastModifiedDate: '##string'
+  lastName: '##string'
+  login: '#string'
+responseMatchesEach:
+  authorities: '##string'

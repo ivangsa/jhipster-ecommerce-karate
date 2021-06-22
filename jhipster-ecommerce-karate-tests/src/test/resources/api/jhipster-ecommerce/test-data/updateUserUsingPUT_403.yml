@@ -1,0 +1,23 @@
+statusCode: 403
+headers: {}
+params: null
+body:
+  activated: true
+  authorities:
+    - fill some value
+  createdBy: fill some value
+  createdDate: fill some value
+  email: fill some value
+  firstName: fill some value
+  id: 0
+  imageUrl: fill some value
+  langKey: fill some value
+  lastModifiedBy: fill some value
+  lastModifiedDate: fill some value
+  lastName: fill some value
+  login: >-
+    fill pattern:
+    ^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$
+matchResponse: false
+responseMatch: null
+responseMatchesEach: {}

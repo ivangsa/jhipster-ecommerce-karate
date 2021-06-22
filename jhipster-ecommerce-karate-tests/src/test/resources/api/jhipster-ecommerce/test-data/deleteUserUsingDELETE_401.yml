@@ -1,0 +1,10 @@
+statusCode: 401
+headers: {}
+params:
+  login: >-
+    fill pattern:
+    ^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$
+body: null
+matchResponse: false
+responseMatch: null
+responseMatchesEach: {}

@@ -1,0 +1,99 @@
+statusCode: 200
+headers: {}
+params:
+  id: 0
+body:
+  cart:
+    customerDetails:
+      addressLine1: fill some value
+      addressLine2: fill some value
+      carts:
+        - null
+      city: fill some value
+      country: fill some value
+      gender: FEMALE
+      id: 0
+      phone: fill some value
+      user:
+        activated: true
+        email: fill some value
+        firstName: fill some value
+        id: 0
+        imageUrl: fill some value
+        langKey: fill some value
+        lastName: fill some value
+        login: >-
+          fill pattern:
+          ^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$
+        resetDate: fill some value
+    id: 0
+    orders:
+      - null
+    paymentMethod: IDEAL
+    paymentReference: fill some value
+    placedDate: fill some value
+    status: PENDING
+    totalPrice: -1
+  id: 0
+  product:
+    description: fill some value
+    id: 0
+    image: fill some value
+    imageContentType: fill some value
+    name: fill some value
+    price: -1
+    productCategory:
+      description: fill some value
+      id: 0
+      name: fill some value
+      products:
+        - null
+    productSize: M
+  quantity: -1
+  totalPrice: -1
+matchResponse: false
+responseMatch:
+  cart:
+    customerDetails:
+      addressLine1: '#string'
+      addressLine2: '##string'
+      carts: '##array'
+      city: '#string'
+      country: '#string'
+      gender: '#string'
+      id: '##number'
+      phone: '#string'
+      user:
+        activated: '#boolean'
+        email: '##string'
+        firstName: '##string'
+        id: '##number'
+        imageUrl: '##string'
+        langKey: '##string'
+        lastName: '##string'
+        login: '#string'
+        resetDate: '##string'
+    id: '##number'
+    orders: '##array'
+    paymentMethod: '#string'
+    paymentReference: '##string'
+    placedDate: '#string'
+    status: '#string'
+    totalPrice: '#string'
+  id: '##number'
+  product:
+    description: '##string'
+    id: '##number'
+    image: '##string'
+    imageContentType: '##string'
+    name: '#string'
+    price: '#string'
+    productCategory:
+      description: '##string'
+      id: '##number'
+      name: '#string'
+      products: '##array'
+    productSize: '#string'
+  quantity: '#number'
+  totalPrice: '#string'
+responseMatchesEach: {}

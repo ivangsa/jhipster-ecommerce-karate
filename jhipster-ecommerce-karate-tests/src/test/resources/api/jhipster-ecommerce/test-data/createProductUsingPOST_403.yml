@@ -1,0 +1,20 @@
+statusCode: 403
+headers: {}
+params: null
+body:
+  description: fill some value
+  id: 0
+  image: fill some value
+  imageContentType: fill some value
+  name: fill some value
+  price: -1
+  productCategory:
+    description: fill some value
+    id: 0
+    name: fill some value
+    products:
+      - null
+  productSize: S
+matchResponse: false
+responseMatch: null
+responseMatchesEach: {}

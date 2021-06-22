@@ -1,0 +1,78 @@
+statusCode: 200
+headers: {}
+params:
+  id: 0
+body: null
+matchResponse: false
+responseMatch:
+  customerDetails:
+    addressLine1: '#string'
+    addressLine2: '##string'
+    carts: '##array'
+    city: '#string'
+    country: '#string'
+    gender: '#string'
+    id: '##number'
+    phone: '#string'
+    user:
+      activated: '#boolean'
+      email: '##string'
+      firstName: '##string'
+      id: '##number'
+      imageUrl: '##string'
+      langKey: '##string'
+      lastName: '##string'
+      login: '#string'
+      resetDate: '##string'
+  id: '##number'
+  orders: '##array'
+  paymentMethod: '#string'
+  paymentReference: '##string'
+  placedDate: '#string'
+  status: '#string'
+  totalPrice: '#string'
+responseMatchesEach:
+  orders:
+    cart:
+      customerDetails:
+        addressLine1: '#string'
+        addressLine2: '##string'
+        carts: '##array'
+        city: '#string'
+        country: '#string'
+        gender: '#string'
+        id: '##number'
+        phone: '#string'
+        user:
+          activated: '#boolean'
+          email: '##string'
+          firstName: '##string'
+          id: '##number'
+          imageUrl: '##string'
+          langKey: '##string'
+          lastName: '##string'
+          login: '#string'
+          resetDate: '##string'
+      id: '##number'
+      orders: '##array'
+      paymentMethod: '#string'
+      paymentReference: '##string'
+      placedDate: '#string'
+      status: '#string'
+      totalPrice: '#string'
+    id: '##number'
+    product:
+      description: '##string'
+      id: '##number'
+      image: '##string'
+      imageContentType: '##string'
+      name: '#string'
+      price: '#string'
+      productCategory:
+        description: '##string'
+        id: '##number'
+        name: '#string'
+        products: '##array'
+      productSize: '#string'
+    quantity: '#number'
+    totalPrice: '#string'

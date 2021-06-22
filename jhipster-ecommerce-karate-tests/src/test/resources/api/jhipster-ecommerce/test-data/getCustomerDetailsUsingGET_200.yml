@@ -1,0 +1,53 @@
+statusCode: 200
+headers: {}
+params:
+  id: 0
+body: null
+matchResponse: false
+responseMatch:
+  addressLine1: '#string'
+  addressLine2: '##string'
+  carts: '##array'
+  city: '#string'
+  country: '#string'
+  gender: '#string'
+  id: '##number'
+  phone: '#string'
+  user:
+    activated: '#boolean'
+    email: '##string'
+    firstName: '##string'
+    id: '##number'
+    imageUrl: '##string'
+    langKey: '##string'
+    lastName: '##string'
+    login: '#string'
+    resetDate: '##string'
+responseMatchesEach:
+  carts:
+    customerDetails:
+      addressLine1: '#string'
+      addressLine2: '##string'
+      carts: '##array'
+      city: '#string'
+      country: '#string'
+      gender: '#string'
+      id: '##number'
+      phone: '#string'
+      user:
+        activated: '#boolean'
+        email: '##string'
+        firstName: '##string'
+        id: '##number'
+        imageUrl: '##string'
+        langKey: '##string'
+        lastName: '##string'
+        login: '#string'
+        resetDate: '##string'
+    id: '##number'
+    orders: '##array'
+    paymentMethod: '#string'
+    paymentReference: '##string'
+    placedDate: '#string'
+    status: '#string'
+    totalPrice: '#string'
